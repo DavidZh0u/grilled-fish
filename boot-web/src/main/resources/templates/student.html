@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>短信渠道管理</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common-font.css}">
+    <link rel="stylesheet" th:href="@{/css/common-button.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sendChannel.js}"></script>
+</head>
+
+<body onload="load()">
+<div class="x-body">
+
+    <div class="layui-row">
+        <form class="layui-form layui-col-md12 x-so" th:action="@{/sendChannel}">
+            <div class="layui-input-inline">
+                <select id="supplierName" name="supplierName">
+                    <option>供应商名称</option>
+                    <option th:each="list : ${supplierList}"
+                            th:text="${list.getSupplierName()}"></option>
+                </select>
+            </div>
+            <input type="text" id="smsChannelName" name="smsChannelName" placeholder="请输入渠道名称"
+                   autocomplete="off" class="layui-input"
+                   lay-verify="checkLength50" maxlength="50">
+            <button class="layui-btn"  lay-submit="" lay-filter="query"><i class="layui-icon">&#xe615;</i></button>
+        </form>
+    </div>
+
+    <xblock>
+        <button class="layui-btn" onclick="popups('添加短信渠道','/sendChannel-edit',699,499)">
+            <i class="layui-icon"></i>添加</button>
+    </xblock>
+
+    <table class="layui-table table-content">
+        <thead>
+        <tr>
+            <th class="table-content" style="width: 50px;">编号</th>
+            <th class="table-content" style="width: 100px;">供应商名称</th>
+            <th class="table-content" style="width: 130px;">渠道名称</th>
+            <th class="table-content" style="width: 100px;">供应商账号</th>
+            <th class="table-content" style="width: 150px;">供应商密码</th>
+            <th class="table-content" style="width: 75px;">计费长度</th>
+            <th class="table-content" style="width: 75px;">是否启用</th>
+            <th class="table-content" style="width: 165px;">更新时间</th>
+            <th class="table-content" style="width: 110px;">操作</th>
+        </thead>
+        <tbody>
+        <tr th:each="list : ${sendChannelsList}">
+            <td th:text="${list.getSmsChannelId()}"></td>
+            <td th:text="${list.getSupplierName()}"></td>
+            <td th:text="${list.getSmsChannelName()}"></td>
+            <td th:text="${list.getAccountName()}"></td>
+            <td th:text="${list.getAccountPwd()}"></td>
+            <td th:text="${list.getBillingLength()}"></td>
+            <td class="td-status">
+                <span style="cursor: not-allowed;" th:class="${list.isUsed()} ?
+                'layui-btn layui-btn-normal layui-btn-mini' :
+                'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"
+                      th:text="${list.isUsed()} ? '已启用' : '已停用'">
+                </span>
+            </td>
+            <td th:text="${list.getModifyDate()}"></td>
+            <td>
+                <div class="am-btn-toolbar">
+                    <div class="am-btn-group am-btn-group-xs">
+                        <button class="am-btn am-btn-default am-btn-xs am-text-secondary"
+                                th:onclick="'javascript:popups(\'编辑\',\'sendChannel-edit?id='+${list.getSmsChannelId()}+'\',699,499)'">
+                            <span class="am-icon-pencil-square-o"></span> 编辑</button>
+                        <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
+                                th:onclick="'javascript:del(this,'+${list.getSmsChannelId()}+')'" >
+                            <span class="am-icon-trash-o"></span> 删除</button>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <div class="page">
+        <a class="prev" href="javascript:void(0)" onclick="page(1)">首页</a>
+        <span th:switch="${pageNum}">
+            <a th:case="1" href="javascript:void(0)" class="num" onclick="page(1)">上一页</a>
+            <a th:case="*" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${pageNum - 1}+');'">上一页</a>
+        </span>
+        <span th:switch="${pageNum}">
+            <a th:case="${pages}" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${pages}+');'">下一页</a>
+            <a th:case="*" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${pageNum + 1}+');'">下一页</a>
+        </span>
+        <a class="next" href="javascript:void(0)" th:onclick="'javascript:page('+${pages}+');'">尾页</a>
+        <a class="next" href="javascript:void(0)" style="cursor:default" th:text="'第'+${pageNum}+'/'+${pages == 0 ? 1 : pages}+'页，共有数据'+${total}+'条'"></a>
+    </div>
+
+</div>
+</body>
+
+</html>

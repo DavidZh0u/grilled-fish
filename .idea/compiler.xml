@@ -6,7 +6,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="boot-parent" />
+        <module name="boot-dao" />
+        <module name="boot-model" />
+        <module name="boot-service" />
+        <module name="boot-service-impl" />
+        <module name="boot-web" />
       </profile>
     </annotationProcessing>
   </component>

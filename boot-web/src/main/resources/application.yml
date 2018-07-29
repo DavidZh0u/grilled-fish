@@ -1,0 +1,30 @@
+server:
+  # 配置端口
+  port: 8080
+  # 项目启动地址为 localhost:8080/
+  servlet:
+    context-path: /
+
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+
+spring:
+  # 数据库配置
+  datasource:
+    # 数据库地址
+    url: jdbc:mysql://localhost:3306/bootdb?autoReconnect=true&useUnicode=true&characte&characterEncoding=utf8&allowMultiQueries=true&useSSL=true
+    # 账号
+    username: root
+    # 密码
+    password: admin321
+    # 指定driver的类名，默认从jdbc url中自动探测
+    driver-class-name: com.mysql.jdbc.Driver
+    # 指定连接的超时时间，毫秒单位
+    connection-timeout: 60000
+    # 指定连接数据库的超时时间
+    login-timeout: 60000

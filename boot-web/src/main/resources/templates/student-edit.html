@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>短信渠道管理</title>
+    <meta charset="utf-8">
+    <link rel="stylesheet" th:href="@{/css/common.css}">
+    <link rel="stylesheet" th:href="@{/css/common-font.css}">
+    <script type="text/javascript" th:src="@{/js/jquery-1.11.3.min.js}"></script>
+    <script type="text/javascript" th:src="@{/layui/layui.js}"></script>
+    <script type="text/javascript" th:src="@{/js/sendChannel.js}"></script>
+</head>
+
+<body>
+<div class="x-body">
+    <form class="layui-form">
+
+        <div class="layui-form-item">
+            <label for="supplierName" class="layui-form-label">
+                供应商名称：
+            </label>
+            <div class="layui-inline">
+                <select id="supplierName" name="supplierName" lay-verify="supplierName">
+                    <option>供应商名称</option>
+                    <option th:each="list : ${supplierList}"
+                            th:text="${list.getSupplierName()}"
+                            th:selected="${entity == null ? 'false' : (list.getSupplierName() == entity.getSupplierName())}">
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="smsChannelName" class="layui-form-label">
+                渠道名称：
+            </label>
+            <div class="layui-input-inline">
+                <input style="width: 500px;" type="text" id="smsChannelName" name="smsChannelName"
+                       lay-verify="required|checkLength50" autocomplete="off" class="layui-input" maxlength="50"
+                       th:value="${entity == null ? '' : entity.getSmsChannelName()}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="accountName" class="layui-form-label">
+                供应商账号：
+            </label>
+            <div class="layui-input-inline">
+                <input style="width: 500px;" type="text" id="accountName" name="accountName"
+                       lay-verify="required|checkLength50" autocomplete="off" class="layui-input" maxlength="50"
+                       th:value="${entity == null ? '' : entity.getAccountName()}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="accountPwd" class="layui-form-label">
+                供应商密码：
+            </label>
+            <div class="layui-input-inline">
+                <input style="width: 500px;" type="text" id="accountPwd" name="accountPwd"
+                       lay-verify="required|checkLength50" autocomplete="off" class="layui-input" maxlength="50"
+                       th:value="${entity == null ? '' : entity.getAccountPwd()}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="billingLength" class="layui-form-label">
+                计费长度：
+            </label>
+            <div class="layui-input-inline">
+                <input style="width: 500px;" type="text" id="billingLength" name="billingLength"
+                       lay-verify="required|billingLength" autocomplete="off" class="layui-input" maxlength="3"
+                       th:value="${entity == null ? '' : entity.getBillingLength()}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">状态：</label>
+            <div class="layui-input-block">
+                <input type="checkbox" name="used" lay-skin="switch" lay-filter="switch" lay-text="启用|停用" value="1"
+                       th:checked="${entity == null ? 'true' : entity.isUsed()}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <button class="layui-btn" lay-submit=""
+                    th:lay-filter="${entity == null ? 'add' : 'update'}"
+                    th:text="${entity == null ? '添加' : '更新'}">
+            </button>
+        </div>
+
+        <input type="hidden" name="smsChannelId" th:value="${entity == null ? '' : entity.getSmsChannelId()}">
+
+    </form>
+</div>
+</body>
+
+</html>
