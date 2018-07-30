@@ -1,24 +1,30 @@
 package com.demo.web.controller;
 
-import com.demo.web.entity.Course;
-import com.demo.web.entity.Smsg;
+import com.demo.model.base.Page;
+import com.demo.model.db.Student;
+import com.demo.model.entity.StudentSelectCmd;
+import com.demo.service.StudentService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.List;
 
 @Controller
+@RequestMapping(value = "/student")
 public class StudentController {
 
-    @PostMapping(value = "/test/msg", produces = "application/json")
-    @ResponseBody
-    public void smsStatusReport(@RequestBody Course request) {
-        System.out.println(request);
-        for(Smsg smsg : request.getDataList()){
-            System.out.println(smsg);
-        }
+    @Autowired
+    private StudentService studentService;
+
+    @RequestMapping(value = "/allStu")
+    public String getAllStudent(ModelMap modelMap , StudentSelectCmd stu, Page page){
+        List<Student> studentList = studentService.getAllStudent(page,stu);
+        modelMap.addAttribute("stulist",studentList);
+        modelMap.addAttribute("stu",stu);
+        modelMap.addAttribute("page",page);
+        return "student";
     }
-
-
 
 }

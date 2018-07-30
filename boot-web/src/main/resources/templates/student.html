@@ -16,16 +16,16 @@
 <div class="x-body">
 
     <div class="layui-row">
-        <form class="layui-form layui-col-md12 x-so" th:action="@{/sendChannel}">
+        <form class="layui-form layui-col-md12 x-so" th:action="@{/student/allStu}">
             <div class="layui-input-inline">
-                <select id="supplierName" name="supplierName">
-                    <option>供应商名称</option>
-                    <option th:each="list : ${supplierList}"
-                            th:text="${list.getSupplierName()}"></option>
+                <select id="status" name="status">
+                    <option th:selected="${stu.getStatus()==null}" th:value="null">分数达标</option>
+                    <option th:selected="${stu.getStatus()==true}" th:value="true">及格</option>
+                    <option th:selected="${stu.getStatus()==false}" th:value="false">不及格</option>
                 </select>
             </div>
-            <input type="text" id="smsChannelName" name="smsChannelName" placeholder="请输入渠道名称"
-                   autocomplete="off" class="layui-input"
+            <input type="text" id="stuName" name="stuName" placeholder="请输入学生姓名"
+                   autocomplete="off" class="layui-input" th:value="${stu.getStuName()}"
                    lay-verify="checkLength50" maxlength="50">
             <button class="layui-btn"  lay-submit="" lay-filter="query"><i class="layui-icon">&#xe615;</i></button>
         </form>
@@ -40,39 +40,39 @@
         <thead>
         <tr>
             <th class="table-content" style="width: 50px;">编号</th>
-            <th class="table-content" style="width: 100px;">供应商名称</th>
-            <th class="table-content" style="width: 130px;">渠道名称</th>
-            <th class="table-content" style="width: 100px;">供应商账号</th>
-            <th class="table-content" style="width: 150px;">供应商密码</th>
-            <th class="table-content" style="width: 75px;">计费长度</th>
-            <th class="table-content" style="width: 75px;">是否启用</th>
+            <th class="table-content" style="width: 100px;">姓名</th>
+            <th class="table-content" style="width: 130px;">年级</th>
+            <th class="table-content" style="width: 100px;">班级</th>
+            <th class="table-content" style="width: 150px;">科目</th>
+            <th class="table-content" style="width: 75px;">分数</th>
+            <th class="table-content" style="width: 75px;">是否及格</th>
             <th class="table-content" style="width: 165px;">更新时间</th>
             <th class="table-content" style="width: 110px;">操作</th>
         </thead>
         <tbody>
-        <tr th:each="list : ${sendChannelsList}">
-            <td th:text="${list.getSmsChannelId()}"></td>
-            <td th:text="${list.getSupplierName()}"></td>
-            <td th:text="${list.getSmsChannelName()}"></td>
-            <td th:text="${list.getAccountName()}"></td>
-            <td th:text="${list.getAccountPwd()}"></td>
-            <td th:text="${list.getBillingLength()}"></td>
+        <tr th:each="list : ${stulist}">
+            <td th:text="${list.getId()}"></td>
+            <td th:text="${list.getName()}"></td>
+            <td th:text="${list.getStuGrade()}"></td>
+            <td th:text="${list.getStuClass()}"></td>
+            <td th:text="${list.getCourse()}"></td>
+            <td th:text="${list.getScore()}"></td>
             <td class="td-status">
-                <span style="cursor: not-allowed;" th:class="${list.isUsed()} ?
+                <span style="cursor: not-allowed;" th:class="${list.isStatus()} ?
                 'layui-btn layui-btn-normal layui-btn-mini' :
                 'layui-btn layui-btn-normal layui-btn-mini layui-btn-disabled'"
-                      th:text="${list.isUsed()} ? '已启用' : '已停用'">
+                      th:text="${list.isStatus()} ? '及格' : '不及格'">
                 </span>
             </td>
-            <td th:text="${list.getModifyDate()}"></td>
+            <td th:text="${list.getUpdateTime()}"></td>
             <td>
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
                         <button class="am-btn am-btn-default am-btn-xs am-text-secondary"
-                                th:onclick="'javascript:popups(\'编辑\',\'sendChannel-edit?id='+${list.getSmsChannelId()}+'\',699,499)'">
+                                th:onclick="'javascript:popups(\'编辑\',\'sendChannel-edit?id='+${list.getId()}+'\',699,499)'">
                             <span class="am-icon-pencil-square-o"></span> 编辑</button>
                         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
-                                th:onclick="'javascript:del(this,'+${list.getSmsChannelId()}+')'" >
+                                th:onclick="'javascript:del(this,'+${list.getId()}+')'" >
                             <span class="am-icon-trash-o"></span> 删除</button>
                     </div>
                 </div>
@@ -83,16 +83,16 @@
 
     <div class="page">
         <a class="prev" href="javascript:void(0)" onclick="page(1)">首页</a>
-        <span th:switch="${pageNum}">
+        <span th:switch="${page.getNum()}">
             <a th:case="1" href="javascript:void(0)" class="num" onclick="page(1)">上一页</a>
-            <a th:case="*" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${pageNum - 1}+');'">上一页</a>
+            <a th:case="*" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${page.getNum() - 1}+');'">上一页</a>
         </span>
-        <span th:switch="${pageNum}">
-            <a th:case="${pages}" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${pages}+');'">下一页</a>
-            <a th:case="*" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${pageNum + 1}+');'">下一页</a>
+        <span th:switch="${page.getNum()}">
+            <a th:case="${page.getPages()}" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${page.getPages()}+');'">下一页</a>
+            <a th:case="*" href="javascript:void(0)" class="num" th:onclick="'javascript:page('+${page.getNum() + 1}+');'">下一页</a>
         </span>
-        <a class="next" href="javascript:void(0)" th:onclick="'javascript:page('+${pages}+');'">尾页</a>
-        <a class="next" href="javascript:void(0)" style="cursor:default" th:text="'第'+${pageNum}+'/'+${pages == 0 ? 1 : pages}+'页，共有数据'+${total}+'条'"></a>
+        <a class="next" href="javascript:void(0)" th:onclick="'javascript:page('+${page.getPages()}+');'">尾页</a>
+        <a class="next" href="javascript:void(0)" style="cursor:default" th:text="'第'+${page.getNum()}+'/'+${page.getPages() == 0 ? 1 : page.getPages()}+'页，共有数据'+${page.getTotal()}+'条'"></a>
     </div>
 
 </div>

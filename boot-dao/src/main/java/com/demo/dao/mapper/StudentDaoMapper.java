@@ -1,6 +1,7 @@
 package com.demo.dao.mapper;
 
 import com.demo.model.db.Student;
+import com.demo.model.entity.StudentSelectCmd;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Component;
 
@@ -20,8 +21,8 @@ public interface StudentDaoMapper {
             @Result(property="status",column="status"),
             @Result(property="updateTime",column="update_time"),
     })
-    @Select("SELECT * FROM student ORDER BY update_time")
-    List<Student> selectAll();
+    @SelectProvider(type = StudentSql.class, method = "getAllStudent")
+    List<Student> selectAll(StudentSelectCmd data);
 
     @Update("UPDATE student SET " +
             "name = #{name}," +

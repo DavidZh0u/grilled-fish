@@ -2,12 +2,13 @@ package com.demo.service;
 
 import com.demo.model.base.Page;
 import com.demo.model.db.Student;
+import com.demo.model.entity.StudentSelectCmd;
 
 import java.util.List;
 
 public interface StudentService {
 
-    List<Student> getAllStudent(Page page);
+    List<Student> getAllStudent(Page page, StudentSelectCmd stuCmd);
 
     int addStudent(Student stu);
 

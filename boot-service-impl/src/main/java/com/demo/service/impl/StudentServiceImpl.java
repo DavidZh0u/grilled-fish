@@ -3,8 +3,10 @@ package com.demo.service.impl;
 import com.demo.dao.mapper.StudentDaoMapper;
 import com.demo.model.base.Page;
 import com.demo.model.db.Student;
+import com.demo.model.entity.StudentSelectCmd;
 import com.demo.service.StudentService;
 import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,9 +21,12 @@ public class StudentServiceImpl implements StudentService {
     private StudentDaoMapper studentDaoMapper;
 
     @Override
-    public List<Student> getAllStudent(Page page){
+    public List<Student> getAllStudent(Page page,StudentSelectCmd stuCmd){
         PageHelper.startPage(page.getNum(), page.getSize());
-        List<Student> list = studentDaoMapper.selectAll();
+        List<Student> list = studentDaoMapper.selectAll(stuCmd);
+        PageInfo<Student> pageInfo = new PageInfo<>(list);
+        page.setPages(pageInfo.getPages());
+        page.setTotal(pageInfo.getTotal());
         return list;
     }
 
