@@ -32,7 +32,7 @@
     </div>
 
     <xblock>
-        <button class="layui-btn" onclick="popups('添加短信渠道','/sendChannel-edit',699,499)">
+        <button class="layui-btn" onclick="popups('添加短信渠道','/student/editPage',699,499)">
             <i class="layui-icon"></i>添加</button>
     </xblock>
 
@@ -69,7 +69,7 @@
                 <div class="am-btn-toolbar">
                     <div class="am-btn-group am-btn-group-xs">
                         <button class="am-btn am-btn-default am-btn-xs am-text-secondary"
-                                th:onclick="'javascript:popups(\'编辑\',\'sendChannel-edit?id='+${list.getId()}+'\',699,499)'">
+                                th:onclick="'javascript:popups(\'编辑\',\'/student/editPage?id='+${list.getId()}+'\',699,499)'">
                             <span class="am-icon-pencil-square-o"></span> 编辑</button>
                         <button class="am-btn am-btn-default am-btn-xs am-text-danger am-hide-sm-only"
                                 th:onclick="'javascript:del(this,'+${list.getId()}+')'" >

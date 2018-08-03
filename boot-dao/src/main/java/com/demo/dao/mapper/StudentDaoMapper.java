@@ -24,10 +24,14 @@ public interface StudentDaoMapper {
     @SelectProvider(type = StudentSql.class, method = "getAllStudent")
     List<Student> selectAll(StudentSelectCmd data);
 
+    @ResultMap(value="student")
+    @Select("select * from student where id=#{id} ")
+    Student findStuById(int id);
+
     @Update("UPDATE student SET " +
             "name = #{name}," +
-            "stuGrade = #{stu_grade}," +
-            "stuClass = #{stu_class}," +
+            "stu_grade= #{stuGrade}," +
+            "stu_class = #{stuClass}," +
             "course = #{course}," +
             "score = #{score}," +
             "status = #{status}," +

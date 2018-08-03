@@ -10,6 +10,8 @@ public interface StudentService {
 
     List<Student> getAllStudent(Page page, StudentSelectCmd stuCmd);
 
+    Student findStuById(int id);
+
     int addStudent(Student stu);
 
     int updateStudent(Student stu);

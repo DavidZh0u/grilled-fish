@@ -31,6 +31,11 @@ public class StudentServiceImpl implements StudentService {
     }
 
     @Override
+    public Student findStuById(int id){
+        return  studentDaoMapper.findStuById(id);
+    }
+
+    @Override
     public int addStudent(Student stu){
         return studentDaoMapper.insert(stu);
     }

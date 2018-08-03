@@ -65,7 +65,7 @@ layui.use(['form', 'layer'], function () {
         //弹出loading
         var loading = parent.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
 
-        $.post("/sendChannel-add", data.field, function (response) {
+        $.post("/student/add", data.field, function (response) {
             parent.layer.close(loading);
             layer.alert(response, { closeBtn: 0, title: '消息', anim: 6, shadeClose: false}, function (index) {
 
@@ -84,7 +84,7 @@ layui.use(['form', 'layer'], function () {
         //弹出loading
         var loading = parent.layer.msg('数据提交中，请稍候', {icon: 16, time: false, shade: 0.8});
 
-        $.post("/sendChannel-update", data.field, function (response) {
+        $.post("/student/edit", data.field, function (response) {
             parent.layer.close(loading);
             layer.alert(response, { closeBtn: 0, title: '消息', anim: 6, shadeClose: false}, function (index) {
 

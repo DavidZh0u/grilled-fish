@@ -16,80 +16,100 @@
     <form class="layui-form">
 
         <div class="layui-form-item">
-            <label for="supplierName" class="layui-form-label">
-                供应商名称：
+            <label for="name" class="layui-form-label">
+                姓名：
+            </label>
+            <div class="layui-input-inline">
+                <input style="width: 500px;" type="text" id="name" name="name"
+                       lay-verify="required|checkLength50" autocomplete="off" class="layui-input" maxlength="50"
+                       th:value="${stu == null ? '' : stu.getName()}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="stuGrade" class="layui-form-label">
+                年级：
             </label>
             <div class="layui-inline">
-                <select id="supplierName" name="supplierName" lay-verify="supplierName">
-                    <option>供应商名称</option>
-                    <option th:each="list : ${supplierList}"
-                            th:text="${list.getSupplierName()}"
-                            th:selected="${entity == null ? 'false' : (list.getSupplierName() == entity.getSupplierName())}">
+                <select id="stuGrade" name="stuGrade" lay-verify="stuGrade">
+                    <option th:value="0"
+                            th:selected="${stu.getStuGrade() == null}">选择班级
+                    </option>
+                    <option th:value="1"
+                            th:selected="${stu.getStuGrade() == '1'}">一年级
+                    </option>
+                    <option th:value="2"
+                            th:selected="${stu.getStuGrade() == '2'}">二年级
+                    </option>
+                    <option th:value="3"
+                            th:selected="${stu.getStuGrade() == '3'}">三年级
                     </option>
                 </select>
             </div>
         </div>
 
         <div class="layui-form-item">
-            <label for="smsChannelName" class="layui-form-label">
-                渠道名称：
+            <label for="stuClass" class="layui-form-label">
+                班级：
+            </label>
+            <div class="layui-inline">
+                <select id="stuClass" name="stuClass" lay-verify="stuClass">
+                    <option th:value="0"
+                            th:selected="${stu.getStuClass() == null}">请选择班级
+                    </option>
+                    <option th:value="1"
+                            th:selected="${stu.getStuClass() == '1'}">一班
+                    </option>
+                    <option th:value="2"
+                            th:selected="${stu.getStuClass() == '2'}">二班
+                    </option>
+                    <option th:value="3"
+                            th:selected="${stu.getStuClass() == '3'}">三班
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="course" class="layui-form-label">
+                科目：
+            </label>
+            <div class="layui-inline">
+                <select id="course" name="course" lay-verify="course">
+                    <option th:value="null"
+                            th:selected="${stu.getCourse()==''|| stu.getCourse() == null}"></option>
+                    <option th:value="eng"
+                            th:selected="${stu.getCourse() == 'eng'}">英语
+                    </option>
+                    <option th:value="math"
+                            th:selected="${stu.getCourse() == 'math'}">数学
+                    </option>
+                    <option th:value="pe"
+                            th:selected="${stu.getCourse() == 'pe'}">体育
+                    </option>
+                </select>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label for="score" class="layui-form-label">
+                分数：
             </label>
             <div class="layui-input-inline">
-                <input style="width: 500px;" type="text" id="smsChannelName" name="smsChannelName"
+                <input style="width: 500px;" type="text" id="score" name="score"
                        lay-verify="required|checkLength50" autocomplete="off" class="layui-input" maxlength="50"
-                       th:value="${entity == null ? '' : entity.getSmsChannelName()}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label for="accountName" class="layui-form-label">
-                供应商账号：
-            </label>
-            <div class="layui-input-inline">
-                <input style="width: 500px;" type="text" id="accountName" name="accountName"
-                       lay-verify="required|checkLength50" autocomplete="off" class="layui-input" maxlength="50"
-                       th:value="${entity == null ? '' : entity.getAccountName()}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label for="accountPwd" class="layui-form-label">
-                供应商密码：
-            </label>
-            <div class="layui-input-inline">
-                <input style="width: 500px;" type="text" id="accountPwd" name="accountPwd"
-                       lay-verify="required|checkLength50" autocomplete="off" class="layui-input" maxlength="50"
-                       th:value="${entity == null ? '' : entity.getAccountPwd()}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label for="billingLength" class="layui-form-label">
-                计费长度：
-            </label>
-            <div class="layui-input-inline">
-                <input style="width: 500px;" type="text" id="billingLength" name="billingLength"
-                       lay-verify="required|billingLength" autocomplete="off" class="layui-input" maxlength="3"
-                       th:value="${entity == null ? '' : entity.getBillingLength()}">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">状态：</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="used" lay-skin="switch" lay-filter="switch" lay-text="启用|停用" value="1"
-                       th:checked="${entity == null ? 'true' : entity.isUsed()}">
+                       th:value="${stu == null ? '' : stu.getScore()}">
             </div>
         </div>
 
         <div class="layui-form-item">
             <button class="layui-btn" lay-submit=""
-                    th:lay-filter="${entity == null ? 'add' : 'update'}"
-                    th:text="${entity == null ? '添加' : '更新'}">
+                    th:lay-filter="${stu == null ? 'add' : 'update'}"
+                    th:text="${stu == null ? '添加' : '更新'}">
             </button>
         </div>
 
-        <input type="hidden" name="smsChannelId" th:value="${entity == null ? '' : entity.getSmsChannelId()}">
+        <input type="hidden" name="id" th:value="${stu == null ? '' : stu.getId()}">
 
     </form>
 </div>

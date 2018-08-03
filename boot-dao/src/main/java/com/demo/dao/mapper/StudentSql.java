@@ -10,7 +10,6 @@ public class StudentSql {
         sql.append("select * from student where 1=1 ");
         Boolean status = studentSelectCmd.getStatus();
         String stuName = studentSelectCmd.getStuName();
-        System.out.println("name ::::::::: "+stuName);
         if(StringUtils.hasText(stuName)){
             sql.append(" and name like '%").append(stuName).append("%' ");
         }

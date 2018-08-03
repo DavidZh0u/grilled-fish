@@ -50,8 +50,8 @@ public class ApplicationTests {
         for(int i = 1 ;i <= 97; i++){
             Student student = new Student();
             student.setName("David-"+rom.nextInt(100));
-            student.setStuClass(2);
-            student.setStuGrade(3);
+            student.setStuClass("2");
+            student.setStuGrade("3");
             student.setCourse("eng");
             int grades = rom.nextInt(100)+1;
             student.setScore(grades);
